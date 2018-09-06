@@ -8,11 +8,11 @@ function buylotto(price){
 }
 
 function createlotto(entry_chance){
-    let lotto = []; //랜덤으로 6자리 숫자를 받음
+    let lotto = [];       //랜덤으로 6자리 숫자를 받음
     let singlelotto = []; // lotto 배열에서 중복 숫자 제거
     let resultlotto = []; // 최종 로또
 
-    //숫자 랜던으로 6자리 생성
+    //숫자 랜덤으로 6자리 생성
     while(resultlotto.length < entry_chance ) {
         let lottoCount = 0;
         while(lottoCount < 6){
@@ -46,9 +46,9 @@ function createlotto(entry_chance){
 function printresult(entry_chance, lotto){
 
     const setLuckyNumber = [1, 2, 3, 4, 5, 6]; // 당첨 로또 숫자
-    let luckyNum = 0; // 맞춘 숫자의 개수
+    let luckyNum = 0;              // 맞춘 숫자의 개수
     let checkNum = [];
-    let Yield = 0; // 수익률
+    let Yield = 0;                 // 수익률
 
     // chance 만큼 생성된 로또와 당첨 숫자 비교
     for (var i=0; i<lotto.length; i++){
@@ -68,37 +68,29 @@ function printresult(entry_chance, lotto){
     console.log("당첨 통계");
     console.log("------------")
 
-    if(checkNum.includes(2)) {
-        //매칭 숫자만 남기고 삭제, 남은 숫자개수로 일치하는 장수 뽑기
-        let resultNum = checkNum.filter(item => item === 2);
-        console.log("2개 일치 (0원)-" + resultNum.length + "장");
-        Yield = 0;
-    } else if(checkNum.includes(3)) {
-        let resultNum = checkNum.filter(item => item === 3);
-        console.log("3개 일치 (5000원)-" + resultNum.length + "장");
-        Yield = 0;
-    } else if(checkNum.includes(4)) {
-        let resultNum = checkNum.filter(item => item === 4);
-        console.log("4개 일치 (50000원)-" + resultNum.length + "장");
-        Yield = 0;
-    } else if(checkNum.includes(5)) {
-        let resultNum = checkNum.filter(item => item === 5);
-        console.log("5개 일치 (150000원)-" + resultNum.length + "장");
-        Yield = 0;
-    } else if(checkNum.includes(6)) {
-        let resultNum = checkNum.filter(item => item === 6);
-        console.log("6개 일치 (2000000000원)-" + resultNum.length + "장");
+
+    const result = {
+        winsNum2 : resultNum = checkNum.filter(item => item === 2),
+        winsNum3 : resultNum = checkNum.filter(item => item === 3),
+        winsNum4 : resultNum = checkNum.filter(item => item === 4),
+        winsNum5 : resultNum = checkNum.filter(item => item === 5),
+        winsNum6 : resultNum = checkNum.filter(item => item === 6)
+    }
+
+    if(result.winsNum6.length === 6) {
         Yield = (chance / resultNum.length) * 100;
-    } 
+    } else {
+        Yield = 0;
+    }
+
+    console.log("2개 일치 (0원)-" + result.winsNum2.length + "장");
+    console.log("3개 일치 (5000원)-" + result.winsNum3.length + "장");
+    console.log("4개 일치 (50000원)-" + result.winsNum4.length + "장");
+    console.log("5개 일치 (150000원)-" + result.winsNum5.length + "장");
+    console.log("6개 일치 (2000000000원)-" + result.winsNum6.length + "장");
 
     console.log("나의 수익률은 " + Yield + "% 입니다.");
+
 }
 
 buylotto(14000);
-
-
-
-
-
-
-

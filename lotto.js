@@ -43,14 +43,12 @@ function createlotto(entry_chance){
     return resultlotto;
 }
 
-function printresult(entry_chance, lotto){
-
+function comparisonNum(lotto){
     const setLuckyNumber = [1, 2, 3, 4, 5, 6]; // 당첨 로또 숫자
     let luckyNum = 0;              // 맞춘 숫자의 개수
     let checkNum = [];
-    let Yield = 0;                 // 수익률
 
-    // chance 만큼 생성된 로또와 당첨 숫자 비교
+    // 생성된 로또와 당첨 숫자별로 비교
     for (var i=0; i<lotto.length; i++){
         for(var j=0; j<lotto[i].length; j++){
             if(setLuckyNumber.includes(lotto[i][j])){
@@ -62,26 +60,37 @@ function printresult(entry_chance, lotto){
         luckyNum = 0;
     }
 
+        const result = {
+            winsNum2 : resultNum = checkNum.filter(item => item === 2),
+            winsNum3 : resultNum = checkNum.filter(item => item === 3),
+            winsNum4 : resultNum = checkNum.filter(item => item === 4),
+            winsNum5 : resultNum = checkNum.filter(item => item === 5),
+            winsNum6 : resultNum = checkNum.filter(item => item === 6)
+        }
+
+    return result;
+}
+
+function calculationYield(result, entry_chance){
+    let lotto_yield = 0;
+    if(result.winsNum6.length === 6) {
+        lotto_yield = (entry_chance / result.winsNum6.length) * 100;
+    } else {
+        lotto_yield = 0;
+    }
+    return lotto_yield;
+}
+function printresult(entry_chance, lotto){
+
+    const setLuckyNumber = [1, 2, 3, 4, 5, 6]; // 당첨 로또 숫자
+    const result = comparisonNum(lotto);
+    const lotto_yield = calculationYield(result, entry_chance);
+
     console.log("로또 " + entry_chance +"개를 발행했습니다.");
     console.log(lotto);
     console.log("setLuckyNumber("+ setLuckyNumber +")");
     console.log("당첨 통계");
     console.log("------------")
-
-
-    const result = {
-        winsNum2 : resultNum = checkNum.filter(item => item === 2),
-        winsNum3 : resultNum = checkNum.filter(item => item === 3),
-        winsNum4 : resultNum = checkNum.filter(item => item === 4),
-        winsNum5 : resultNum = checkNum.filter(item => item === 5),
-        winsNum6 : resultNum = checkNum.filter(item => item === 6)
-    }
-
-    if(result.winsNum6.length === 6) {
-        Yield = (chance / resultNum.length) * 100;
-    } else {
-        Yield = 0;
-    }
 
     console.log("2개 일치 (0원)-" + result.winsNum2.length + "장");
     console.log("3개 일치 (5000원)-" + result.winsNum3.length + "장");
@@ -89,7 +98,7 @@ function printresult(entry_chance, lotto){
     console.log("5개 일치 (150000원)-" + result.winsNum5.length + "장");
     console.log("6개 일치 (2000000000원)-" + result.winsNum6.length + "장");
 
-    console.log("나의 수익률은 " + Yield + "% 입니다.");
+    console.log("나의 수익률은 " + lotto_yield + "% 입니다.");
 
 }
 
